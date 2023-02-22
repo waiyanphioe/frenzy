@@ -4,22 +4,28 @@ import { SignIn, SignUp } from "../components";
 const Auth = () => {
 	const [create, setCreate] = React.useState(false);
 	return (
-		<div className=" w-full h-screen bg-slate-100 flex flex-col items-center justify-center">
+		<div className=" w-full h-full flex flex-col items-center justify-center">
 			{create ? <SignUp /> : <SignIn />}
 			{create ? (
-				<span
-					onClick={() => setCreate(false)}
-					className="mt-2 cursor-pointer"
-				>
+				<p className="mt-2 text-sm select-none">
 					Already have account ?
-				</span>
+					<span
+						onClick={() => setCreate(false)}
+						className=" cursor-pointer ml-1"
+					>
+						Sign In here
+					</span>
+				</p>
 			) : (
-				<span
-					onClick={() => setCreate(true)}
-					className="mt-2 cursor-pointer"
-				>
-					Create new account
-				</span>
+				<p className="mt-2 text-sm select-none">
+					Don't have an account ?
+					<span
+						onClick={() => setCreate(true)}
+						className="cursor-pointer ml-1"
+					>
+						Sign Up here
+					</span>
+				</p>
 			)}
 		</div>
 	);

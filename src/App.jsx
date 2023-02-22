@@ -1,28 +1,24 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Auth from "./pages/auth";
 import PageNotFound from "./pages/404";
+import Main from "./pages/main";
+import axios from "axios";
+import { UserContext } from "./context/UserContext";
 
 const App = () => {
-	const [auth, setAuth] = React.useState(false);
+	axios.defaults.baseURL = "http://localhost:5000";
+
 	return (
-		<Routes>
-			{auth ? (
-				<>
-					<Route path="/" element={<h1>Hu</h1>} />
-					<Route
-						path="/auth"
-						element={<Navigate to={"/"} replace />}
-					/>
-					<Route path="*" element={<PageNotFound />} />
-				</>
-			) : (
-				<>
+		<div className="w-full h-screen bg-white">
+			<div className=" max-w-7xl h-full my-0 mx-auto">
+				<Routes>
+					<Route path="/" element={<Main />} />
 					<Route path="/auth" element={<Auth />} />
-					<Route path="*" element={<Navigate to={"/auth"} />} />
-				</>
-			)}
-		</Routes>
+					<Route path="*" element={<PageNotFound />} />
+				</Routes>
+			</div>
+		</div>
 	);
 };
 

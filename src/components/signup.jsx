@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 const SignUp = () => {
 	const [data, setData] = React.useState({
@@ -10,7 +11,10 @@ const SignUp = () => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		console.log(data);
+		axios
+			.post("http://localhost:5000/auth/signup", data)
+			.then((res) => console.log(res.data))
+			.catch((err) => console.log(err));
 	};
 	return (
 		<form onSubmit={handleSubmit} className="text-center">
@@ -76,7 +80,7 @@ const SignUp = () => {
 			/>
 			<input
 				type="submit"
-				className="w-full my-2 p-2 text-base rounded text-white bg-slate-800 shadow-sm  hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2"
+				className="w-full my-2 p-2 text-base rounded text-white bg-slate-800 shadow-sm  hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:ring-offset-2"
 				value="Sign Up"
 			/>
 		</form>

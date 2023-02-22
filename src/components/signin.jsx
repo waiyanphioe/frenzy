@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 const SignIn = () => {
-	const [data, setData] = React.useState({ username: "", password: "" });
+	const [data, setData] = React.useState({ handle: "", password: "" });
 
-	const handleSubmit = (event) => {
+	const navigate = useNavigate();
+
+	const { setToken } = useContext(UserContext);
+
+	const handleSubmit = async (event) => {
 		event.preventDefault();
+		await axios
+			.post("/auth/signin", data)
+			.then((res) => {
+				setToken(res.data.token);
+				navigate("../");
+			})
+			.catch((err) => console.log(err));
 	};
 	return (
 		<form onSubmit={handleSubmit} className="text-center">
@@ -13,10 +27,10 @@ const SignIn = () => {
 				title="Username or Email"
 				className="block my-2 p-2 text-base rounded border-gray-300 text-gray-900 placeholder-gray-500 bg-slate-200  focus:border-slate-600 focus:ring-slate-600"
 				placeholder="Username or email"
-				value={data.username}
+				value={data.handle}
 				onChange={(e) =>
 					setData({
-						username: e.target.value,
+						handle: e.target.value,
 						password: data.password,
 					})
 				}
@@ -30,7 +44,7 @@ const SignIn = () => {
 				value={data.password}
 				onChange={(e) =>
 					setData({
-						username: data.username,
+						handle: data.handle,
 						password: e.target.value,
 					})
 				}
@@ -38,7 +52,7 @@ const SignIn = () => {
 			/>
 			<input
 				type="submit"
-				className="w-full my-2 p-2 text-base rounded text-white bg-slate-800 cursor-pointer shadow-sm hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2"
+				className="w-full my-2 p-2 text-base rounded text-white bg-slate-800 cursor-pointer shadow-sm hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:ring-offset-2"
 				value="Sign In"
 			/>
 		</form>
